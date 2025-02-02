@@ -6,8 +6,20 @@ import 'codemirror/mode/xml/xml.js';
 import 'codemirror/addon/edit/closetag.js';
 import 'codemirror/addon/edit/closebrackets.js';
 import { useAppContext } from "./Allcode.js";
-import ACTIONs from "../Actions.js";
+// import ACTIONs from "../Actions.js";
 const HtmlEditor = ({socketRef,roomId,onCodeChange}) => {
+    const ACTIONs = {
+    JOIN: 'join',
+    JOINED: 'joined',
+    DISCONNECTED: 'disconnected',
+    HTML_CHANGE: 'html-change',
+    CSS_CHANGE: 'css-change',
+    JAVASCRIPT_CHANHE: 'javascript-change',
+    HTML_SYNC: 'html-sync',
+    CSS_SYNC: 'css-sync',
+    JAVASCRIPT_SYNC: 'javascript-sync',
+    LEAVE: 'leave'
+}
     const [open,setOpen] = useState(true);
     const {htmlRef} = useAppContext();
     useEffect(()=>{
