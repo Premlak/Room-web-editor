@@ -16,9 +16,14 @@ const ACTIONs = {
     LEAVE: 'leave'
 }
 const path = require('path');
+const cors = require("cors");
 const server = http.Server(app);
 const io = new Server(server);
 app.use(express.static('build'));
+app.use(cors({
+    origin: process.env.FRONTEND_URL || "*", 
+    methods: ["GET", "POST"],
+}));
 app.use((req, res, nxt)=>{
 res.sendFile(path.join(__dirname,'build','index.html'))
 })
