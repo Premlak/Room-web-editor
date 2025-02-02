@@ -5,10 +5,22 @@ import Javascript from '../componets/Javascript.js';
 import CSS from "../componets/Css.js";
 import { useAppContext } from "../componets/Allcode.js";
 import { initSocket } from "../socket.js";
-import ACTIONs from "../Actions.js";
+// import ACTIONs from "../Actions.js";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 const Editor = () => {
+    const ACTIONs = {
+    JOIN: 'join',
+    JOINED: 'joined',
+    DISCONNECTED: 'disconnected',
+    HTML_CHANGE: 'html-change',
+    CSS_CHANGE: 'css-change',
+    JAVASCRIPT_CHANHE: 'javascript-change',
+    HTML_SYNC: 'html-sync',
+    CSS_SYNC: 'css-sync',
+    JAVASCRIPT_SYNC: 'javascript-sync',
+    LEAVE: 'leave'
+}
     const location = useLocation();
     const [newHtml,setNewHtml] = useState('');
     const [newCss,setNewCss] = useState('');
