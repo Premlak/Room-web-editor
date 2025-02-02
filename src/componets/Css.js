@@ -6,8 +6,20 @@ import 'codemirror/mode/css/css.js';
 import 'codemirror/addon/edit/closetag.js';
 import 'codemirror/addon/edit/closebrackets.js';
 import { useAppContext } from "./Allcode.js";
-import ACTIONs from "../Actions.js";
+// import ACTIONs from "../Actions.js";
 export default function CSS({socketRef,roomId,onCodeChange}){
+    const ACTIONs = {
+    JOIN: 'join',
+    JOINED: 'joined',
+    DISCONNECTED: 'disconnected',
+    HTML_CHANGE: 'html-change',
+    CSS_CHANGE: 'css-change',
+    JAVASCRIPT_CHANHE: 'javascript-change',
+    HTML_SYNC: 'html-sync',
+    CSS_SYNC: 'css-sync',
+    JAVASCRIPT_SYNC: 'javascript-sync',
+    LEAVE: 'leave'
+}
     const {cssRef} = useAppContext();
     const [open,setOpen] = useState(false);
     useEffect(()=>{
