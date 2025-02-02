@@ -1,0 +1,54 @@
+Your frontend socket connection is incorrect for a deployed environment. Right now, your frontend is trying to connect to http://localhost:3001, which only works in local development.
+
+Step-by-Step Fixes for Deployment
+1. Update REACT_APP_BACKEND_URL
+Go to Render Dashboard → Your Frontend Service → Environment Variables.
+Change the value of REACT_APP_BACKEND_URL from:
+http://localhost:3001
+
+to:
+
+https://your-backend-service.onrender.com
+(Replace your-backend-service.onrender.com with your actual backend URL from Render.)
+2. Update socket.js in Frontend
+Modify your initSocket function to correctly connect to the backend:
+
+
+import { io } from "socket.io-client";
+
+export const initSocket = async () => {
+    const options = {
+        forceNew: true, // Fixed option name
+        reconnectionAttempts: Infinity, // Fixed property name
+        timeout: 10000,
+        transports: ["websocket"],
+    };
+
+    return io(process.env.REACT_APP_BACKEND_URL, options);
+};
+🔹 Fixes applied:
+
+Corrected force new connection to forceNew
+Corrected reconnectionAttempt to reconnectionAttempts
+Ensured environment variable is used correctly
+3. Fix Backend CORS Issues
+Open server.js in your backend.
+Add CORS support to allow WebSocket connections from your frontend:
+js
+
+const cors = require("cors");
+
+app.use(cors({
+    origin: process.env.FRONTEND_URL || "*", // Allow only your frontend
+    methods: ["GET", "POST"],
+}));
+🔹 Set FRONTEND_URL in Render → Backend → Environment Variables
+
+FRONTEND_URL=https://your-frontend-service.onrender.com
+4. Restart Both Services
+Go to Render Dashboard.
+Restart both frontend and backend services so they use the updated variables.
+5. Test the Connection
+Open your browser DevTools (F12).
+Go to Console and check if there are any WebSocket errors.
+If the connection still fails, check Render Logs in your backend for errors.
